@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link href="/static/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="/static/resources/jquery-2.1.4.min.js"></script>
+    <script src="/static/resources/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+    <title>Title</title>
+
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/main">首页</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="{% url 'films' 1 %}">更多电影</a></li>
+<!--            <li><a href="#">更多演员</a></li>-->
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <form action="/search/" method="post" class="navbar-form navbar-left" role="search">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" name="movieName">
+                    </div>
+                    <button type="submit" class="btn btn-default">查询</button>
+                </form>
+            </li>
+            <li><a href="/logout">退出 <span class="glyphicon glyphicon-log-in"></span></a></li>
+        </ul>
+    </div>
+</nav>
+
+{% block mainBody %}
+{% endblock %}
+
+</body>
+
+<script>
+    var onResize = function(){
+        $("body").css("margin-top",$(".navbar").height());
+    };
+    $(window).resize(onResize);
+    $(function(){
+        onResize();
+    });
+</script>
+
+</html>

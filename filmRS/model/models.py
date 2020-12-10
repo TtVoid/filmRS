@@ -19,7 +19,7 @@ class Movies(models.Model):
     country = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'movies'
 
 
@@ -43,3 +43,19 @@ class Tags(models.Model):
     class Meta:
         managed = True
         db_table = 'tags'
+
+
+class Search(models.Model):
+    userid = models.IntegerField(db_column='userId', blank=True, null=True)
+    movieid = models.IntegerField(db_column='movieId', blank=True, null=True)
+
+
+class Collect(models.Model):
+    userid = models.IntegerField(db_column='userId', blank=True, null=True)
+    movieid = models.IntegerField(db_column='movieId', blank=True, null=True)
+
+
+class Rate(models.Model):
+    userid = models.IntegerField(db_column='userId', blank=True, null=True)
+    movieid = models.IntegerField(db_column='movieId', blank=True, null=True)
+    rating = models.IntegerField(blank=True, null=True)

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% extends "nav.html" %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,113 +10,84 @@
     <script src="/static/resources/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 
     <title>Title</title>
+
+    {% block css %}
+    <style>
+        body {
+            background-color:lightgrey
+        }
+    </style>
+    {% endblock %}
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/main">首页</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="#">更多电影</a></li>
-            <li><a href="#">更多演员</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+{% block mainBody %}
+<div class="container" style="padding-top:20px;width:80%">
+<!--    <div class="panel panel-default">-->
+<!--        <div class="panel-body" style="width:100%">-->
+<!--            <p style="text-align:center">为您推荐</p>-->
+<!--            <p style="text-align:center">&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Recommend&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</p>-->
+<!--        </div>-->
+<!--    </div>-->
+    <h2 style="text-align:center;"><b>为您推荐</b></h2>
+    <h3 style="text-align:center">------ Recommend ------</h3>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row clearfix">
+                {% for film in recommendFilms %}
+                    <div class="col-sm-2 colunm" style="margin-top:20px">
+                       <img src="{{film.url}}" class="img-thumbnail" alt="{{film.name}}"/>
+                       <a href="{% url 'filmDetail' film.id status %}"><h4 style="white-space:nowrap;overflow: hidden;text-overflow: ellipsis;">{{film.name}}</h4></a>
                     </div>
-                    <button type="submit" class="btn btn-default">查询</button>
-                </form>
-            </li>
-            <li><a href="/login">退出 <span class="glyphicon glyphicon-log-in"></span></a></li>
-        </ul>
-    </div>
-</nav>
-<div class="container" style="padding-top:20px">
-    <div class="panel panel-danger">
-        <div class="panel-heading">
-            <h3 class="panel-title">推荐电影</h3>
-        </div>
-        <div class="panel-body">
-            这是一个基本的面板
-        </div>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">电影资源</h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-3">
-                    <img src="{{films.0.url}}" class="img-thumbnail" alt="{{films.0.name}}"/>
-                    <a href="#"><h3>{{films.0.name}}</h3></a>
-                </div>
-                <div class="col-sm-3">
-                    <img src="{{films.1.url}}" class="img-thumbnail" alt="{{films.1.name}}"/>
-                    <a href="#"><h3>{{films.1.name}}</h3></a>
-                </div>
-                <div class="col-sm-3">
-                    <img src="{{films.2.url}}" class="img-thumbnail" alt="{{films.2.name}}"/>
-                    <a href="#"><h3>{{films.2.name}}</h3></a>
-                </div>
-                <div class="col-sm-3">
-                    <img src="{{films.3.url}}" class="img-thumbnail" alt="{{films.3.name}}"/>
-                    <a href="#"><h3>{{films.3.name}}</h3></a>
-                </div>
-            </div>
-            <div class="row" style="padding-top:20px">
-                <div class="col-sm-3">
-                    <img src="{{films.4.url}}" class="img-thumbnail" alt="{{films.4.name}}"/>
-                    <a href="#"><h3>{{films.4.name}}</h3></a>
-                </div>
-                <div class="col-sm-3">
-                    <img src="{{films.5.url}}" class="img-thumbnail" alt="{{films.5.name}}"/>
-                    <a href="#"><h3>{{films.5.name}}</h3></a>
-                </div>
-                <div class="col-sm-3">
-                    <img src="{{films.6.url}}" class="img-thumbnail" alt="{{films.6.name}}"/>
-                    <a href="#"><h3>{{films.6.name}}</h3></a>
-                </div>
-                <div class="col-sm-3">
-                    <img src="{{films.7.url}}" class="img-thumbnail" alt="{{films.7.name}}"/>
-                    <a href="#"><h3>{{films.7.name}}</h3></a>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">演员资源</h3>
-        </div>
+
+<!--    <div class="panel panel-default">-->
+<!--        <div class="panel-body" style="width:100%">-->
+<!--            <h2 style="text-align:center">电影资源</h2>-->
+<!--            <h3 style="text-align:center">&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Film Resource&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</h3>-->
+<!--        </div>-->
+<!--    </div>-->
+    <h2 style="text-align:center;margin-top:50px"><b>电影资源</b></h2>
+    <h3 style="text-align:center">------ Film Resource ------</h3>
+    <div class="panel panel-default">
         <div class="panel-body">
-            <ul class="nav nav-pills">
-            {% for film in films %}
-                <li><a href="#">{{film.starts}}</a></li>
-            {% endfor %}
-            </ul>
+            <div class="row clearfix">
+                {% for film in films %}
+                    <div class="col-sm-2 colunm" style="margin-top:20px">
+                       <img src="{{film.url}}" class="img-thumbnail" alt="{{film.name}}"/>
+                       <a href="{% url 'filmDetail' film.id status %}"><h4 style="white-space:nowrap;overflow: hidden;text-overflow: ellipsis;">{{film.name}}</h4></a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
+<!--    <div class="panel panel-info">-->
+<!--        <div class="panel-heading">-->
+<!--            <h3 class="panel-title">演员资源</h3>-->
+<!--        </div>-->
+<!--        <div class="panel-body">-->
+<!--            <ul class="nav nav-pills">-->
+<!--            {% for film in films %}-->
+<!--                <li><a href="#">{{film.starts}}</a></li>-->
+<!--            {% endfor %}-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>
 
+{% endblock %}
 </body>
 
-<script>
-    var onResize = function(){
-        $("body").css("margin-top",$(".navbar").height());
-    };
-    $(window).resize(onResize);
-    $(function(){
-        onResize();
-    });
-
-
-
-
-
-
-
-</script>
+<!--<script>-->
+<!--    var onResize = function(){-->
+<!--        $("body").css("margin-top",$(".navbar").height());-->
+<!--    };-->
+<!--    $(window).resize(onResize);-->
+<!--    $(function(){-->
+<!--        onResize();-->
+<!--    });-->
+<!--</script>-->
 </html>
 
