@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% extends "nav.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link href="/static/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="/static/resources/jquery-2.1.4.min.js"></script>
+    <script src="/static/resources/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+    <title>Title</title>
+
+    {% block css %}
+    <style>
+        body {
+            background-color:lightgrey
+        }
+        .flex-col{
+            display: flex;
+            flex-direction:column;
+            justify-content: space-between;
+        }
+        .flex-row{
+            display: flex;
+            flex-direction:row;
+            justify-content: space-around;
+        }
+    </style>
+    {% endblock %}
+</head>
+<body>
+
+{% block mainBody %}
+
+<div class="container" style="padding-top:20px">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <img src="{{film.0.url}}" class="img-thumbnail">
+                </div>
+                <div class="col-sm-6" style="display: inline-block;">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h3>{{film.0.name}}<span class="label label-primary">{{avgRating}}</span></h3>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-sm-12 flex-col">
+                            <h4>Type:{{film.0.genre}}</h4>
+                            <h4>Span:{{film.0.time}}</h4>
+                            <h4>Release Time:{{film.0.release_time}}</h4>
+                            <h4>directors:{{film.0.directors}}</h4>
+                            <h4>stars:{{film.0.starts}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    {% if collected %}
+                    <a href="{% url 'clickCollect' film.0.id %}" class="btn btn-primary" style="float:right;color:orange">
+                        <span class="glyphicon glyphicon-star"></span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'clickCollect' film.0.id %}" class="btn btn-primary" style="float:right;">
+                        <span class="glyphicon glyphicon-star"></span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12">
+                <h3>简介</h3>
+                <h4>{{film.0.intro}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3>评分</h3>
+                    <div class="row">
+                        <div class="flex-row">
+                            <button type="button" class="btn btn-primary btn-lg">
+                              <span class="glyphicon glyphicon-star"></span> 您的评分
+                            </button>
+                            <div class="btn-group btn-group-lg">
+                                <a href="{% url 'clickRate' film.0.id 1 %}" type="button" class="btn btn-warning {{ratingStatus.0.disabled}} {{ratingStatus.0.active}}">1分</a>
+                                <a href="{% url 'clickRate' film.0.id 2 %}" type="button" class="btn btn-warning {{ratingStatus.1.disabled}} {{ratingStatus.1.active}}">2分</a>
+                                <a href="{% url 'clickRate' film.0.id 3 %}" type="button" class="btn btn-warning {{ratingStatus.2.disabled}} {{ratingStatus.2.active}}">3分</a>
+                                <a href="{% url 'clickRate' film.0.id 4 %}" type="button" class="btn btn-warning {{ratingStatus.3.disabled}} {{ratingStatus.3.active}}">4分</a>
+                                <a href="{% url 'clickRate' film.0.id 5 %}" type="button" class="btn btn-warning {{ratingStatus.4.disabled}} {{ratingStatus.4.active}}">5分</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
+</body>
+</html>

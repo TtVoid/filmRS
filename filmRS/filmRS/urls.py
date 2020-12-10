@@ -15,11 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import re_path # 用re_path 需要引入
+from django.conf.urls import url
 
-from view import login,main
+from view import login, nav, main, filmDetail, films
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', login.login),
+    path('logout/', nav.logout),
     path('main/', main.main),
+    path('search/', nav.search),
+    path('films/<curPage>', films.films, name='films'),
+    path('filmDetail/<id>/<status>/', filmDetail.filmDetail, name='filmDetail'),
+    path('filmDetail/<id>/collected/test/', filmDetail.clickCollect, name='clickCollect'),
+    path('filmDetail/<id>/rated/<rating>', filmDetail.clickRate, name='clickRate'),
 ]

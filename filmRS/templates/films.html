@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% extends "nav.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link href="/static/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="/static/resources/jquery-2.1.4.min.js"></script>
+    <script src="/static/resources/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+
+    <title>Title</title>
+
+    {% block css %}
+    <style>
+        body {
+            background-color:lightgrey
+        }
+    </style>
+    {% endblock %}
+</head>
+<body>
+{% block mainBody %}
+<div class="container" style="padding-top:20px;width:80%">
+    <div class="panel panel-default">
+        <div class="panel-body">
+<!--            <div class="row">-->
+<!--                <h2 style="text-align:center;"><b>电影资源</b></h2>-->
+<!--                <h3 style="text-align:center">&#45;&#45;&#45;&#45;&#45;&#45; Film Resource &#45;&#45;&#45;&#45;&#45;&#45;</h3>-->
+<!--            </div>-->
+            <div class="row">
+                {% for film in films %}
+                <div class="col-sm-2 colunm" style="margin-top:20px">
+                    <img src="{{film.url}}" class="img-thumbnail" alt="{{film.name}}"/>
+                    <a href="{% url 'filmDetail' film.id status %}"><h4
+                            style="white-space:nowrap;overflow: hidden;text-overflow: ellipsis;">{{film.name}}</h4></a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="row" style="float:right;margin-right:20px">
+                {% if data %}
+                <ul id="pages" class="pagination pagination">
+<!--                    <li><a href="{% url 'films' -1 %}"><</a></li>-->
+                    {% if data.first %}
+                    <li><a href="{% url 'films' 1 %}">1</a></li>
+                    {% endif %}
+                    {% if data.left %}
+                    {% if data.left_has_more %}
+                    <li><span>...</span></li>
+                    {% endif %}
+                    {% for i in data.left %}
+                    <li><a href="{% url 'films' i %}">{{i}}</a></li>
+                    {% endfor %}
+                    {% endif %}
+                    <li class="active"><a href="{% url 'films' data.page %}">{{data.page}}</a></li>
+                    {% if data.right %}
+                    {% for i in data.right %}
+                    <li><a href="{% url 'films' i %}">{{i}}</a></li>
+                    {% endfor %}
+                    {% if data.right_has_more %}
+                    <li><span>...</span></li>
+                    {% endif %}
+                    {% endif %}
+                    {% if data.last %}
+                    <li><a href="{% url 'films' data.total_pages %}">{{data.total_pages}}</a></li>
+                    {% endif %}
+<!--                    <li><a href="{% url 'films' 0 %}">></a></li>-->
+                </ul>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>
